@@ -52,4 +52,11 @@ public class MemberService {
 
         return new MemberDetailResponseDto(member.getId(), member.getName());
     }
+
+    @Transactional
+    public void deleteMember(Long memberId) {
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new NullPointerException("멤버가 없습니다."));
+
+        memberRepository.delete(member);
+    }
 }
