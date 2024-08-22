@@ -6,6 +6,7 @@ import org.example.basicspringsession.dto.*;
 import org.example.basicspringsession.entity.Member;
 import org.example.basicspringsession.repository.MemberRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -43,5 +44,12 @@ public class MemberService {
         member.update(requestDto.getName());
 
         return new MemberUpdateResponseDto(member.getId(), member.getName());
+    }
+
+    @Transactional
+    public MemberDetailResponseDto getMemberDetail(Long memberId) {
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new NullPointerException("멤버가 없습니다."));
+
+        return new MemberDetailResponseDto(member.getId(), member.getName());
     }
 }

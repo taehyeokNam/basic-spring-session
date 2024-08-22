@@ -27,4 +27,9 @@ public class MemberController {
     public ResponseEntity<MemberUpdateResponseDto> updateMember(@PathVariable Long memberId, @RequestBody MemberUpdateRequestDto requestDto) {
         return ResponseEntity.ok(memberService.updateMember(memberId, requestDto));
     }
+
+    @GetMapping("/members/{memberId}")
+    public ResponseEntity<MemberDetailResponseDto> getMember(@PathVariable Long memberId) {
+        return ResponseEntity.ok(memberService.getMemberDetail(memberId));
+    }
 }
