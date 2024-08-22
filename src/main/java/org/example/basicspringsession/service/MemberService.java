@@ -2,9 +2,7 @@ package org.example.basicspringsession.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.example.basicspringsession.dto.MemberSaveRequestDto;
-import org.example.basicspringsession.dto.MemberSaveResponseDto;
-import org.example.basicspringsession.dto.MemberSimpleResponseDto;
+import org.example.basicspringsession.dto.*;
 import org.example.basicspringsession.entity.Member;
 import org.example.basicspringsession.repository.MemberRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -36,5 +34,14 @@ public class MemberService {
         }
 
         return dtoList;
+    }
+
+    @Transactional
+    public MemberUpdateResponseDto updateMember(Long memberId, MemberUpdateRequestDto requestDto) {
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new NullPointerException("멤버가 없습니다."));
+
+        member.update(requestDto.getName());
+
+        return new MemberUpdateResponseDto(member.getId(), member.getName());
     }
 }
